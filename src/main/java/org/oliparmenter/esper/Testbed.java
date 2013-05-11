@@ -8,13 +8,14 @@ public class Testbed {
 
 	/**
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		
 		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
-		String expression = "select avg(mid) from org.oliparmenter.esper.Tick.win:time(10 sec)";
+		String expression = "select avg(mid) from org.oliparmenter.esper.Tick.win:time(15 sec)";
 		EPStatement statement = epService.getEPAdministrator().createEPL(expression);
 		
 		EsperEventListener listener = new EsperEventListener();
@@ -25,7 +26,7 @@ public class Testbed {
 
 			Tick tick = t.getTick();
 			//System.out.println(tick);
-			
+			Thread.currentThread().sleep(500);
 			epService.getEPRuntime().sendEvent(tick);
 		}
 	}
